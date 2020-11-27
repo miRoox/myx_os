@@ -1,3 +1,4 @@
+use core::fmt;
 
 const BUFFER_HEIGHT: usize = 25;
 const BUFFER_WIDTH: usize = 80;
@@ -20,6 +21,13 @@ pub struct Writer {
     buffer: &'static mut Buffer,
 }
 
+impl fmt::Write for Writer {
+    fn write_str(&mut self, s: &str) -> fmt::Result {
+        self.write_string(s);
+        Ok(())
+    }
+}
+
 impl Writer {
     pub fn write_string(&mut self, s: &str) {
         for byte in s.bytes() {
@@ -29,7 +37,6 @@ impl Writer {
                 // invalid
                 _ => self.write_byte(0xfe),
             }
-
         }
     }
 
@@ -94,6 +101,8 @@ impl ColorCode {
 }
 
 pub fn print_something() {
+    use core::fmt::Write;
+    
     let mut writer = Writer {
         column_position: 0,
         color_code: ColorCode::new(Color::Yellow, Color::Black),
@@ -102,5 +111,5 @@ pub fn print_something() {
 
     writer.write_byte(b'H');
     writer.write_string("ello ");
-    writer.write_string("Wörld!");
+    write!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
 }
