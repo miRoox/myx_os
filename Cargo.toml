@@ -13,4 +13,4 @@ bootloader = "0.9.0"
 panic = "abort"
 
 [profile.release]
-pance = "abort"
+panic = "abort"
