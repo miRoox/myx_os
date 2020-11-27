@@ -45,10 +45,14 @@ impl Writer {
                 let col = self.column_position;
 
                 let color_code = self.color_code;
-                self.buffer.chars[row][col] = ScreenChar {
-                    ascii_character: byte,
-                    color_code,
-                };
+                unsafe {
+                    (&mut self.buffer.chars[row][col] as *mut ScreenChar).write_volatile(
+                        ScreenChar {
+                            ascii_character: byte,
+                            color_code,
+                        },
+                    );
+                }
                 self.column_position += 1;
             }
         }
