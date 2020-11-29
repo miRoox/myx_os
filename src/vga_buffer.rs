@@ -65,7 +65,30 @@ impl Writer {
         }
     }
 
-    fn new_line(&mut self) {/* TODO */}
+    fn new_line(&mut self) {
+        for row in 1..BUFFER_HEIGHT {
+            for col in 0..BUFFER_WIDTH {
+                unsafe {
+                    let character = (&mut self.buffer.chars[row][col] as *mut ScreenChar).read_volatile();
+                    (&mut self.buffer.chars[row - 1][col] as *mut ScreenChar).write_volatile(character);
+                }
+            }
+        }
+        self.clear_row(BUFFER_HEIGHT - 1);
+        self.column_position = 0;
+    }
+
+    fn clear_row(&mut self, row: usize) {
+        let blank = ScreenChar {
+            ascii_character: b' ',
+            color_code: self.color_code,
+        };
+        for col in 0..BUFFER_WIDTH {
+            unsafe {
+                (&mut self.buffer.chars[row][col] as *mut ScreenChar).write_volatile(blank);
+            }
+        }
+    }
 }
 
 #[allow(dead_code)]
@@ -110,6 +133,6 @@ pub fn print_something() {
     };
 
     writer.write_byte(b'H');
-    writer.write_string("ello ");
-    write!(writer, "The numbers are {} and {}", 42, 1.0/3.0).unwrap();
+    writer.write_string("ello \n");
+    write!(writer, "The numbers are {} and {}\n", 42, 1.0/3.0).unwrap();
 }
