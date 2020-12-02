@@ -1,4 +1,5 @@
 use core::fmt;
+use lazy_static::lazy_static;
 
 const BUFFER_HEIGHT: usize = 25;
 const BUFFER_WIDTH: usize = 80;
@@ -89,6 +90,14 @@ impl Writer {
             }
         }
     }
+}
+
+lazy_static! {
+    pub static ref WRITER: Writer = Writer {
+        column_position: 0,
+        color_code: ColorCode::new(Color::Yellow, Color::Black),
+        buffer: unsafe { &mut *(0xb8000 as *mut Buffer) },
+    };
 }
 
 #[allow(dead_code)]
