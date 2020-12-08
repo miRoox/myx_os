@@ -14,3 +14,7 @@ qemu-system-x86_64 -curses -drive format=raw,file=./target/x86_64-myx_os/debug/b
 
 > `-curses`
 > * Normally, QEMU uses SDL to display the VGA output. With this option, QEMU can display the VGA output when in text mode using a curses/ncurses interface. Nothing is displayed in graphical mode.
+
+### VGA Text Mode
+
+### Testing
