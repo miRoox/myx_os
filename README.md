@@ -18,3 +18,5 @@ qemu-system-x86_64 -curses -drive format=raw,file=./target/x86_64-myx_os/debug/b
 ### VGA Text Mode
 
 ### Testing
+
+To run test, use `cargo xtest --target x86_64-myx_os.json` instead of `cargo test`.
