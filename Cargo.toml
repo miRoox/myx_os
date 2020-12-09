@@ -6,6 +6,7 @@ edition = "2018"
 
 [package.metadata.bootimage]
 run-command = ["qemu-system-x86_64", "-curses", "-drive", "format=raw,file={}"]
+test-args = ["-device", "isa-debug-exit,iobase=0xf4,iosize=0x04"]
 
 [dependencies]
 bootloader = "0.9.0"
