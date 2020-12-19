@@ -11,6 +11,8 @@ use core::panic::PanicInfo;
 
 #[no_mangle]
 pub extern "C" fn _start() -> ! {
+    myx_os::init();
+
     println!("Hello World{}", "!");
 
     #[cfg(test)]
