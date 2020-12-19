@@ -71,8 +71,10 @@ impl Writer {
         for row in 1..BUFFER_HEIGHT {
             for col in 0..BUFFER_WIDTH {
                 unsafe {
-                    let character = (&mut self.buffer.chars[row][col] as *mut ScreenChar).read_volatile();
-                    (&mut self.buffer.chars[row - 1][col] as *mut ScreenChar).write_volatile(character);
+                    let character =
+                        (&mut self.buffer.chars[row][col] as *mut ScreenChar).read_volatile();
+                    (&mut self.buffer.chars[row - 1][col] as *mut ScreenChar)
+                        .write_volatile(character);
                 }
             }
         }
