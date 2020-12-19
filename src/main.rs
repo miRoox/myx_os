@@ -14,10 +14,12 @@ pub extern "C" fn _start() -> ! {
     myx_os::init();
 
     println!("Hello World{}", "!");
+    x86_64::instructions::interrupts::int3();
 
     #[cfg(test)]
     test_main();
 
+    println!("It did not crash!");
     loop {}
 }
 
